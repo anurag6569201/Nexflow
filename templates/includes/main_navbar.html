@@ -1,6 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'assets/css/global/main_navbar.css' %}">
-<nav class="navbar main_navbar">
+<nav class="navbar main_navbar navbar_vertical">
     <ul class="navbar__menu">
       <li class="navbar__item {% if request.path == '/home/' %} navbar__item__new__background {% endif %}">
         <a href="{% url 'home:home' %}" class="navbar__link"><i data-feather="home"></i><span>Home</span></a>

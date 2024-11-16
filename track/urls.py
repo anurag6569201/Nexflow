@@ -19,13 +19,13 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
 
     path('',include('landing_page.urls')),
     path('home/',include('home.urls')),
-
 ]
 
 if settings.DEBUG:

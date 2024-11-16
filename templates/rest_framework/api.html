@@ -1,4 +1,4 @@
-{% extends "allauth/layouts/main_base.html" %}
+{% extends "rest_framework/base.html" %}
 {% load i18n %}
 {% load static %}
 {% load allauth account %}
@@ -6,10 +6,10 @@
 {% trans "Profile" %}
 {% endblock head_title %}
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'assets/css/home/profile.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/home/api_home.css' %}">
 {% endblock stylesheet %}
 {% block pages %}
 
-hii
+hiisd
 
 {% endblock pages %}

@@ -6,6 +6,11 @@ body {
 }
 
 .navbar {
+
+}
+.navbar_vertical{
+  width: 80px !important;
+  height: calc(100vh - 2rem);
   position: fixed;
   top: 1rem;
   left: 1rem;
@@ -13,7 +18,7 @@ body {
   border-radius: 10px;
   padding: 1rem 0;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
-  height: calc(100vh - 2rem);
+
   z-index: 1000;
 }
 

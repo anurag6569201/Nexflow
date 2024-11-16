@@ -1,13 +1,13 @@
-from django.urls import path
+from django.urls import path,include
 from home import views
-from django.views.generic import TemplateView
-
+from rest_framework import routers
+from rest_framework import routers
+router = routers.DefaultRouter()
 
 app_name = 'home'
 
 urlpatterns = [
     path('', views.home, name='home'),
-
-    # readme urls
-    path('profile/readme/edit/', views.readme_edit, name='readme_edit'),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls'))
 ]
