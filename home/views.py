@@ -24,15 +24,55 @@ def home(request):
     print(readme)
     return render(request, 'apps/home/profile.html',context)
 
-@login_required
-def readme_edit(request):
-    readme, created = models.UserProfileREADME.objects.get_or_create(user=request.user)
-    if request.method == 'POST':
-        form = READMEForm(request.POST, instance=readme)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "README updated successfully.")
-            return redirect('home:home')
-    else:
-        form = READMEForm(instance=readme)
-    return render(request, 'apps/home/readme_edit.html', {'form': form})
+from rest_framework import viewsets, permissions
+from .models import audio_saving
+from .serializers import AudioSavingSerializer
+
+class AudioSavingViewSet(viewsets.ModelViewSet):
+    queryset = audio_saving.objects.all()
+    serializer_class = AudioSavingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        # Automatically set the user to the logged-in user
+        serializer.save(user=self.request.user)
+
+
+from rest_framework import generics, status
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+from .serializers import SignupSerializer, LoginSerializer
+
+# Signup API
+class SignupView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = SignupSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            "user_id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "token": token.key
+        }, status=status.HTTP_201_CREATED)
+
+# Login API
+class LoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            "user_id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "token": token.key
+        }, status=status.HTTP_200_OK)

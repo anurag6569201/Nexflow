@@ -29,4 +29,10 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s Profile"
 
 
-    
+class audio_saving(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    audio_file = models.FileField(upload_to='audio_files/')
+    date_time = models.DateTimeField(auto_now_add=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.user.username}'s Audio File"
