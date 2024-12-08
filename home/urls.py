@@ -1,19 +1,17 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views
-from .views import AudioSavingViewSet
-from .views import SignupView, LoginView
-from .views import SaveAudioView
+from home import views
 
-# Create a router and register the API viewset
+# Router for Admin Views
 router = DefaultRouter()
-router.register(r'audio', AudioSavingViewSet, basename='audio')
+router.register(r'admin/audio', views.AdminAudioViewSet, basename='admin_audio')
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Main application home view
-    path('api/', include(router.urls)),  # API routes for the audio_saving model
-    path('api-auth/', include('rest_framework.urls')),  # DRF login/logout views
-    path('api/signup/', SignupView.as_view(), name='signup'),
-    path('api/login/', LoginView.as_view(), name='login'),
-    path('save/audio/', SaveAudioView.as_view(), name='save_audio'),
+    path('', views.home, name='home'),
+
+    # Admin views
+    path('api/', include(router.urls)),
+
+    # API key-based access
+    path('api/audio/', views.AudioSavingAPI, name='audio_api'),
 ]

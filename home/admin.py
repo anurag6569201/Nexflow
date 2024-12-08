@@ -1,6 +1,9 @@
 from django.contrib import admin
-from home import models
+from .models import AudioSaving
 
-admin.site.register(models.UserProfileREADME)
-admin.site.register(models.UserProfile)
-admin.site.register(models.audio_saving)
+
+@admin.register(AudioSaving)
+class AudioSavingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'audio_file', 'date_time', 'uploaded_at')
+
+
