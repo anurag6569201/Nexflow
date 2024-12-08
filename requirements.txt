@@ -1,4 +1,5 @@
 asgiref==3.8.1
+beautifulsoup4==4.12.3
 bleach==6.2.0
 certifi==2024.8.30
 cffi==1.17.1
@@ -9,10 +10,14 @@ Django==5.1.2
 django-allauth==65.1.0
 django-appconf==1.0.6
 django-compressor==4.5.1
+django-cors-headers==4.6.0
+django-filter==24.3
 django-markdownify==0.9.5
+djangorestframework==3.15.2
 idna==3.10
 Markdown==3.7
 markdown2==2.5.1
+markdownify==0.13.1
 oauthlib==3.2.2
 pillow==10.4.0
 pycparser==2.22
@@ -27,6 +32,7 @@ setuptools==75.1.0
 six==1.16.0
 social-auth-app-django==5.4.2
 social-auth-core==4.5.4
+soupsieve==2.6
 sqlparse==0.5.1
 tinycss2==1.4.0
 urllib3==2.2.3

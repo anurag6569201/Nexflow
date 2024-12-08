@@ -10,6 +10,83 @@
 {% endblock stylesheet %}
 {% block pages %}
 
-hii
+<h1>Audio Recorder</h1>
+    <button id="startRecording" onclick="startRecording()">Start Recording</button>
+    <button id="stopRecording" onclick="stopRecording()" class="hidden">Stop Recording</button>
+    <p id="status"></p>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+        let audioUrl;
+        let audio;
+
+        // Start recording
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        audioUrl = URL.createObjectURL(audioBlob);
+                        audio = new Audio(audioUrl);
+                        document.getElementById('status').innerText = "Recording stopped. Saving audio...";
+
+                        // Send the audio to the server after recording
+                        saveAudioToServer(audioBlob);
+                    };
+
+                    mediaRecorder.start();
+                    document.getElementById('status').innerText = "Recording...";
+                    document.getElementById('startRecording').classList.add('hidden');
+                    document.getElementById('stopRecording').classList.remove('hidden');
+
+                    // Automatically stop recording after 2 minutes (120,000 milliseconds)
+                    setTimeout(() => {
+                        if (mediaRecorder.state === "recording") {
+                            stopRecording();
+                        }
+                    }, 120000);  // 2 minutes
+                })
+                .catch(error => {
+                    console.error("Error accessing the microphone:", error);
+                    alert("Microphone access failed.");
+                });
+        }
+
+        // Stop recording
+        function stopRecording() {
+            if (mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                document.getElementById('startRecording').classList.remove('hidden');
+                document.getElementById('stopRecording').classList.add('hidden');
+            }
+        }
+
+        // Send the audio file to the Django backend via an API
+        function saveAudioToServer(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio_file', audioBlob, 'audio.wav');
+
+            fetch('save/audio/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Audio saved successfully:', data);
+                document.getElementById('status').innerText = "Audio saved successfully!";
+            })
+            .catch(error => {
+                console.error('Error saving audio:', error);
+                document.getElementById('status').innerText = "Error saving audio.";
+            });
+        }
+    </script>
 
 {% endblock pages %}

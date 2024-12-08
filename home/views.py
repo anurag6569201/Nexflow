@@ -76,3 +76,42 @@ class LoginView(generics.GenericAPIView):
             "email": user.email,
             "token": token.key
         }, status=status.HTTP_200_OK)
+
+
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import audio_saving
+from django.core.exceptions import ValidationError
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import os
+
+@method_decorator(csrf_exempt, name='dispatch')
+class SaveAudioView(View):
+    def post(self, request, *args, **kwargs):
+        # Get the uploaded audio file
+        audio_file = request.FILES.get('audio_file')
+
+        if not audio_file:
+            return JsonResponse({'error': 'No audio file provided'}, status=400)
+
+        # Save the audio file to the model
+        try:
+            # You can save the file using the default storage system or any custom path
+            # Here we're saving the file directly using Django's FileField
+            audio_instance = audio_saving(user=request.user, audio_file=audio_file)
+            audio_instance.save()
+
+            return JsonResponse({
+                'message': 'Audio saved successfully',
+                'audio_id': audio_instance.id
+            })
+        except ValidationError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': 'Failed to save audio', 'details': str(e)}, status=500)

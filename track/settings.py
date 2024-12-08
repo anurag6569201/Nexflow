@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-zxrc@6s9yr7rjp2(=f)@+ns#+vjw#rt1tsc3#k4a38!1jd4$3#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://trackit-ai.azurewebsites.net','*']
+CSRF_TRUSTED_ORIGINS = ['https://trackit-ai.azurewebsites.net','https://127.0.0.1']
+
 
 
 # Application definition
