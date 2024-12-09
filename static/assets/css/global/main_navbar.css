@@ -1539,6 +1539,7 @@ body {
 .main_container_of_pages {
   padding-left: 7.5rem;
   padding-top: 1rem;
+  padding-right: 1rem;
 }
 
 hr {
