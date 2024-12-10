@@ -3,10 +3,10 @@
 <nav class="navbar main_navbar navbar_vertical">
     <ul class="navbar__menu">
       <li class="navbar__item {% if request.path == '/home/' %} navbar__item__new__background {% endif %}">
-        <a href="#" class="navbar__link"><i data-feather="home"></i><span>Home</span></a>
+        <a href="{% url 'home:home' %}" class="navbar__link"><i data-feather="home"></i><span>Home</span></a>
       </li>
-      <li class="navbar__item {% if request.path == '/club/' %} navbar__item__new__background {% endif %}">
-        <a href="#" class="navbar__link"><i data-feather="message-square"></i><span>Messages</span></a>        
+      <li class="navbar__item {% if 'msg' in request.path  %} navbar__item__new__background {% endif %}">
+        <a href="{% url 'home:msg' %}" class="navbar__link"><i data-feather="message-square"></i><span>Messages</span></a>        
       </li>
       <li class="navbar__item">
         <a href="#" class="navbar__link"><i data-feather="users"></i><span>Customers</span></a>        

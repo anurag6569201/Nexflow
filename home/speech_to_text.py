@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 from .models import AudioSaving
+import json
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG,
         format="%(asctime)s %(message)s", datefmt="%m/%d/%Y %I:%M:%S %p %Z")
@@ -170,8 +171,12 @@ def transcribe(RECORDINGS_BLOB_URI):
                 results_url = file_data.links.content_url
                 results = requests.get(results_url)
                 logging.info(f"Results for {audiofilename}:\n{results.content.decode('utf-8')}")
+
                 audio_record = AudioSaving.objects.filter(file_blog_uri=RECORDINGS_BLOB_URI).first()
-                audio_record.transcription_text = results.content.decode('utf-8')
+                transcription_text = results.content.decode('utf-8')
+                transcription_data = json.loads(transcription_text)
+                lexical_text = transcription_data["combinedRecognizedPhrases"][0]["lexical"]
+                audio_record.transcription_text = lexical_text
                 audio_record.is_transcribed = True
                 audio_record.save()
 

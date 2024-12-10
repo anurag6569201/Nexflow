@@ -12,6 +12,7 @@ router.register(r'audio', views.AdminAudioViewSet, basename='audio')
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('msg/', views.msg, name='msg'),
 
     # Admin views
     path('api/', include(router.urls)),

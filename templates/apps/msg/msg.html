@@ -1,0 +1,133 @@
+{% extends "allauth/layouts/main_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth account %}
+{% block head_title %}
+{% trans "Profile" %}
+{% endblock head_title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'assets/css/msg/msg.css' %}">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.2/css/responsive.dataTables.min.css">
+
+
+{% endblock stylesheet %}
+{% block pages %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="audioTable" class="table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th class="text-center">Audio</th>
+                        <th class="text-center">Transcription Text</th>
+                        <th class="text-center">Uploaded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for audio in audios %}
+                    <tr>
+                        <td><input type="checkbox" class="audio-checkbox" value="{{ audio.id }}"></td>
+                        <td class="text-center"><audio id="audio" controls></audio></td>
+                        <td class="text-left">
+                                {{ audio.transcription_text }}
+                        </td>
+                        <td class="text-center">{{ audio.uploaded_at|date:"Y-m-d H:i:s" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No audio files found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.2/js/dataTables.responsive.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#audioTable').DataTable({
+            "order": [[ 1, "asc" ]],  // Default sorting on the second column (Audio File Name)
+            "paging": true,
+            "searching": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 0 }  // Disable sorting on the checkbox column
+            ]
+        });
+
+        // Search functionality for the DataTable
+        $('#searchInput').on('keyup', function() {
+            table.search(this.value).draw();
+        });
+
+        // Select/Deselect all checkboxes
+        $('#selectAll').on('click', function() {
+            var isChecked = this.checked;
+            $('.audio-checkbox').each(function() {
+                $(this).prop('checked', isChecked);
+            });
+            toggleDeleteButton();
+        });
+
+        // Individual checkbox selection/deselection
+        $(document).on('change', '.audio-checkbox', function() {
+            if ($('.audio-checkbox:checked').length === $('.audio-checkbox').length) {
+                $('#selectAll').prop('checked', true);
+            } else {
+                $('#selectAll').prop('checked', false);
+            }
+            toggleDeleteButton();
+        });
+
+        // Enable/Disable delete button based on selected checkboxes
+        function toggleDeleteButton() {
+            if ($('.audio-checkbox:checked').length > 0) {
+                $('#deleteSelected').prop('disabled', false);
+            } else {
+                $('#deleteSelected').prop('disabled', true);
+            }
+        }
+
+        // Handle delete selected rows
+        $('#deleteSelected').on('click', function() {
+            var selectedIds = [];
+            $('.audio-checkbox:checked').each(function() {
+                selectedIds.push($(this).val());
+            });
+
+            if (selectedIds.length > 0) {
+                if (confirm("Are you sure you want to delete the selected audio files?")) {
+                    $.ajax({
+                        url: '/delete-audios/',
+                        method: 'POST',
+                        data: {
+                            ids: selectedIds,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert(response.message);
+                            location.reload();  // Reload the page to reflect changes
+                        },
+                        error: function(xhr) {
+                            alert("An error occurred. Please try again.");
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+
+{% endblock pages %}

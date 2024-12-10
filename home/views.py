@@ -69,7 +69,7 @@ class AdminAudioViewSet(viewsets.ModelViewSet):
         return gathered_urls  
 
 def home(request):
-    return render(request, 'apps/home/profile.html', {"error": "Audio record not found."})
+    return render(request, 'apps/home/profile.html')
     
 
 from django.http import JsonResponse
@@ -157,3 +157,21 @@ class SaveAudioView(View):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+def msg(request):
+    audios = AudioSaving.objects.all()
+    context = {
+        'audios': audios
+    }
+    return render(request, 'apps/msg/msg.html', context)
