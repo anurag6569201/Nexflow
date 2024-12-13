@@ -17,3 +17,8 @@ class AudioSaving(models.Model):
 
     def __str__(self):
         return f"{self.user.username if self.user else 'API User'}'s Audio File"
+
+
+
+class audio_recordings(models.Model):
+    
