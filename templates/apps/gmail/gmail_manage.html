@@ -1,0 +1,20 @@
+{% extends "allauth/layouts/main_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth account %}
+{% block head_title %}
+{% trans "Profile" %}
+{% endblock head_title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'assets/css/gmail/gmail_manage.css' %}">
+
+{% endblock stylesheet %}
+{% block pages %}
+
+<div class="row">
+    <div class="col-md-12">
+        
+    </div>
+</div>
+
+{% endblock pages %}
