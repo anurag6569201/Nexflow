@@ -1,0 +1,141 @@
+body {
+    background-color: #0D7C66;
+}
+
+#landing {
+    width: 100%;
+    height: 90vh;
+}
+
+.landing_image_container {
+    width: 100%;
+    padding: 0;
+}
+
+.landing_image_container img {
+    height: 60vh;
+    width: 100%;
+}
+
+.landing_title {
+    color: #8EC3B0;
+    text-align: center;
+    margin-top: 5vh;
+}
+
+.landing_title h1 {
+    font-size: 4em;
+}
+
+.landing_get_started_btn {
+    background-color: #8EC3B0;
+    color: #0D7C66;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#landing_about .row {
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.landing_about_first {
+    background-color: #8EC3B0;
+    color: #0D7C66;
+}
+
+.landing_about_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing_about_image img {
+    width: 70%;
+}
+
+.contact-form h2,
+.landing_about_title {
+    font-size: 3.5em;
+}
+
+.contact-form h2 {
+    color: #0D7C66;
+    font-size: 3.5em;
+    text-align: center;
+}
+
+
+/* Contact Info Section Styling */
+#landing_contact {
+    color: #9ED5C5;
+}
+
+/* Contact Form Section Styling */
+.contact-form {
+    background-color: #8EC3B0;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contact-form .form-control {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 0.9rem;
+    background-color: #9ED5C5;
+}
+
+.contact-form .form-control:focus {
+    border-color: #8EC3B0;
+    box-shadow: none;
+}
+
+.contact-form button {
+    background-color: #0D7C66;
+    color: #8EC3B0;
+    font-weight: bold;
+    border: none;
+    padding: 0.75rem;
+    transition: background-color 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #9ED5C5;
+}
+
+#landing_contact {
+    border-radius: none;
+}
+
+.landing_footer {
+    border-radius: none;
+    color: white;
+}
+.contact-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contact-info img {
+    height: 50vh;
+}
+
+.landing_contact_details {
+    color: white;
+}
+
+.contact_details_card {
+    background-color: #8EC3B0;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+}

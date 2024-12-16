@@ -1,0 +1,99 @@
+{% extends "partials/landing_base.html" %}
+{% load static %}
+
+{% block head_title %}
+Onboarding
+{% endblock head_title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'assets/css/landing/landing.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+<div class="container-fluid section" id="landing">
+    <div class="row">
+        <div class="col-md-12 landing_title">
+            <h1>Welcome to TrackIT</h1>
+            <p>
+                TrackIT is an software solution that aims to manage and track files and inventory, secure, and effective.
+            </p>
+            <a href="{% url 'account_login' %}" class="landing_get_started_btn">Get Started</a>
+        </div>
+        <div class="col-md-12 landing_image_container">
+            <img src="../../static/assets/img/landing/land.svg" alt="" class="landing_image">
+        </div>
+    </div>
+</div>
+
+<div class="container section" id="landing_about">
+    <div class="row landing_about_first">
+        <div class="col-md-12">
+            <h1 class="landing_about_title">About Nexify</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        At Nexify, we are committed to revolutionizing how clubs, societies, and organizations approach
+                        member engagement and accountability. Born from a desire to bridge gaps in responsibility
+                        management and participation, Nexify offers a platform designed to streamline workflows, enhance
+                        transparency, and promote sustained engagement.
+                    </p>
+                    <p>
+                        Organizations often face challenges in tracking member contributions and progress, which can
+                        impact both productivity and morale. Nexify addresses this by providing a comprehensive system
+                        for real-time tracking of tasks, responsibilities, and member interactions, ensuring that
+                        everyone stays informed, engaged, and motivated. Our tools help organizations build a culture of
+                        accountability, driving members to take ownership of their roles and contribute meaningfully to
+                        shared goals.
+                    </p>
+                    <p>
+                        By combining advanced features with an intuitive interface, Nexify is committed to helping
+                        organizations foster an environment where every contribution matters. We’re here to empower
+                        clubs and societies to operate more effectively, focusing on their core mission without the
+                        administrative hassle. Join us on a journey to transform organizational dynamics, improve member
+                        experiences, and make each interaction purposeful and impactful.
+                    </p>
+                </div>
+                <div class="col-md-6 landing_about_image">
+                    <img src="{% static 'assets/img/landing/about.svg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 section" id="landing_contact">
+    <div class="row">
+        <div class="col-md-6 contact-info">
+            <img src="{% static 'assets/img/landing/contact.svg' %}" alt="">
+        </div>
+
+        <div class="col-md-6 contact-form">
+            <h2>Contact Us</h2>
+            <form>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Enter your Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Enter a valid email address" required>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="3" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="landing_footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 p-3">
+                <h5 class="text-center">Copyright © 2024 Nexify. All rights reserved.</h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

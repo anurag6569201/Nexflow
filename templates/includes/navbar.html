@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'assets/css/global/navbar.css' %}">
+<nav class="navbar navbar-expand-lg" style="z-index: 10000;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="z-index: 10005;">
+      TrackIT
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="login_landing_btn">
+      <button onclick="window.location.href='{% url 'account_login' %}'"  class="landing_login_btn" type="button">Login</button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="width: 100%;justify-content: center;gap: 25px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#landing">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#landing_about">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#landing_contact">Contact Us</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <button onclick="window.location.href='{% url 'account_login' %}'"  class="landing_login_btn" type="button">Login</button>
+      </form>
+    </div>
+  </div>
+</nav>

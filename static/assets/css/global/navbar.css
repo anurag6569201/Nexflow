@@ -1,0 +1,84 @@
+nav {
+  height: 10vh;
+  position: sticky;
+  top: 0;
+}
+
+.navbar {
+  background-color: #0D7C66;
+  padding: 1rem 0rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8EC3B0;
+}
+
+.navbar-brand:hover {
+  color: #299afd;
+}
+
+.navbar-nav .nav-link {
+  color: #299afd;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #5f46ee;
+  border-bottom: 2px solid #8EC3B0;
+}
+
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+  color: #8EC3B0;
+  border-bottom: 2px solid #8EC3B0;
+}
+
+.navbar-toggler {
+  border: none;
+  background-color: #5f46ee;
+}
+
+.navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba(255,255,255,0.7)" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+}
+
+.landing_login_btn {
+  background-color: #8EC3B0;
+  color: #0D7C66;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+.login_landing_btn{
+  display: none;
+}
+.landing_login_btn:hover {
+  background-color: #8EC3B0;
+  color: #fff;
+}
+.navbar-nav{
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 992px) {
+  .navbar-collapse{
+    display: none;
+    visibility: none;
+  }
+  .login_landing_btn{
+    display: block;
+  }
+  .navbar-toggler{
+    display: none;
+  }
+}
+*{
+  scroll-behavior: smooth;
+}

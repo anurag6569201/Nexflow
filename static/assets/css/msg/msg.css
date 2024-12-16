@@ -1,0 +1,117 @@
+#audioTable thead th {
+    background-color: #37a997; /* Primary Color */
+    color: #ffffff; /* White Text */
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+/* Table Row Styling */
+#audioTable tbody tr {
+    background-color: #ffffff; /* White Background */
+    transition: background-color 0.3s ease-in-out; /* Smooth Hover Transition */
+}
+
+/* Row Hover Effect */
+#audioTable tbody tr:hover {
+    background-color: #e8f6f3; /* Light Shade of Primary Color */
+}
+
+/* Center Align All Text in Body */
+#audioTable tbody td {
+    padding: 10px;
+    color: #0e7c66; /* Secondary Color for Text */
+    font-weight: 500; /* Slightly Bold */
+}
+
+/* Checkbox Column */
+#audioTable tbody td:first-child,
+#audioTable thead th:first-child {
+    text-align: center;
+    width: 50px; /* Fixed Width for Checkboxes */
+}
+
+/* Pagination Buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: #37a997; /* Primary Button Background */
+    color: #ffffff !important; /* White Text */
+    border: 1px solid #0e7c66; /* Secondary Border */
+    border-radius: 4px;
+    margin: 0 2px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #0e7c66; /* Secondary Color on Hover */
+    color: #ffffff !important;
+}
+
+/* Active Page Button */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #0e7c66; /* Active Page Secondary Color */
+    color: #ffffff !important;
+}
+
+/* Search Input */
+.dataTables_wrapper .dataTables_filter input {
+    border: 2px solid #37a997; /* Primary Border */
+    border-radius: 5px;
+    padding: 5px 10px;
+    outline: none;
+    color: wheat !important;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    background-color: #37a997;
+}
+
+/* Search Label */
+.dataTables_wrapper .dataTables_filter label {
+    font-weight: bold;
+    color: #0e7c66; /* Secondary Color for Label */
+}
+
+/* Delete Button Styling */
+#deleteSelected {
+    background-color: #37a997; /* Primary Button */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#deleteSelected:hover {
+    background-color: #0e7c66; /* Secondary on Hover */
+}
+
+/* Disabled Delete Button */
+#deleteSelected:disabled {
+    background-color: #cccccc; /* Gray for Disabled */
+    color: #666666; /* Dim Text */
+    cursor: not-allowed;
+}
+
+/* Table Border Styling */
+#audioTable {
+    border: 2px solid #37a997; /* Primary Border for Table */
+    border-radius: 10px; /* Rounded Corners */
+    overflow: hidden;
+}
+
+/* Add Padding Around Table */
+.dataTables_wrapper {
+    background-color: transparent; /* Light Background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
+}
+
+#audioTable_filter{
+    margin-bottom: 10px;
+}
