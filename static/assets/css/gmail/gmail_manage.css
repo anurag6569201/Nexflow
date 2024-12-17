@@ -1,0 +1,67 @@
+.main_btn_desg {
+    /* Variables */
+    --button_radius: 0.75em;
+    --button_color: #35a997;
+    --button_outline_color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
+}
+
+.button_top {
+    display: block;
+    box-sizing: border-box;
+    border: .5px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.4em;
+    background: var(--button_color);
+    color: var(--button_outline_color);
+    transform: translateY(-0.1em);
+    transition: transform 0.1s ease;
+}
+
+.main_btn_desg:hover .button_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+}
+
+.main_btn_desg:active .button_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
+}
+
+.emails_general_informations{
+    padding: none !important;
+}
+.emails_general_informations .col-md-3{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.gmail_refresh_total{
+    border-radius: 5px;
+    background-color: #ffffff;
+    border: none;
+    color: #0e7c66;
+    margin-left: 5px;
+}
+.gmail_refresh_total:hover{
+    background-color: #0e7c66;
+    color: #ffffff;
+    transition: .4s;
+}
+.gmail_refresh_total svg{
+    width: 16px !important;
+    height: 16px !important;
+}
+.main_btn_desg .skdf{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+}
+.main_btn_desg .tsdjhses{
+    width: 14px !important;
+    height: 14px !important;
+}

@@ -1,0 +1,31 @@
+<span class="button_top"> 
+    <h6 style="display: flex; justify-content: space-between;">
+        General Gmail Account Details
+        <button 
+            class="gmail_refresh_total" 
+            hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"  
+            hx-target="#gmail-details-container" 
+            hx-swap="innerHTML"
+        >
+            <i data-feather="refresh-ccw"></i>
+        </button>
+    </h6>
+    <div class="skdf" style="overflow: hidden;">
+        <i class="tsdjhses" data-feather="mail"></i> 
+        Email Address: 
+        <span class="total_emails_counts">{{ account_details.primary_email }}</span>
+    </div>
+    <div class="skdf">
+        <i class="tsdjhses" data-feather="mail"></i> 
+        Total Messages: 
+        <span class="total_emails_counts">{{ account_details.total_messages }}</span>
+    </div>
+    <div class="skdf">
+        <i class="tsdjhses" data-feather="mail"></i> 
+        Total Threads: 
+        <span class="total_emails_counts">{{ account_details.total_threads }}</span>
+    </div>
+</span>
+<script>
+    feather.replace()
+</script>   
