@@ -1,9 +1,15 @@
-function rotateIcon() {
-    var icon = document.getElementById('refresh-icon');
-    icon.classList.add('rotate');
-    
-    // Optional: If you want to stop the rotation after the data is refreshed
+function rotateIcon(event) {
+    var button = event.target.closest('button'); 
+    console.log('Button clicked:', button);
+
+    var icon = button.querySelector('.icon_rotation');
+    if (icon) {
+        icon.classList.add('rotate');
+    }
+
     document.addEventListener('htmx:afterSwap', function() {
-        icon.classList.remove('rotate');
+        if (icon) {
+            icon.classList.remove('rotate');
+        }
     });
 }

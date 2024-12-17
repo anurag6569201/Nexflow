@@ -6,3 +6,7 @@ class GmailAccountDetails(models.Model):
     primary_email = models.EmailField(default='example@gmail.com')
     total_messages = models.IntegerField(default=1000)
     total_threads = models.IntegerField(default=1000)
+
+class GmailAccountLabelsCounts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    label_info=models.JSONField(default=dict,blank=True,null=True)

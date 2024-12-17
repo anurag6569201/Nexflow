@@ -3,12 +3,11 @@
         General Gmail Account Details
         <button 
             class="gmail_refresh_total" 
-            hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"  
+            hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"
             hx-target="#gmail-details-container" 
             hx-swap="innerHTML"
-            onclick="rotateIcon()"
-        >
-            <i id="refresh-icon" data-feather="refresh-ccw"></i>
+            onclick="rotateIcon(event)">
+            <i class="icon_rotation" data-feather="refresh-ccw"></i>
         </button>
     </h6>
     <div class="skdf" style="overflow: hidden;">

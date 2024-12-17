@@ -26,8 +26,8 @@
                                 hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"
                                 hx-target="#gmail-details-container" 
                                 hx-swap="innerHTML"
-                                onclick="rotateIcon()">
-                                <i id="refresh-icon" data-feather="refresh-ccw"></i>
+                                onclick="rotateIcon(event)">
+                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
                             </button>
                         </h6>
                         <div class="skdf" style="overflow: hidden;">
@@ -47,6 +47,60 @@
                         </div>
                     </span>
                 </div>                
+            </div>
+            <div class="col-md-9">
+                <div class="main_btn_desg col-md-12" id="gmail-details-container">
+                    <span class="button_top"> 
+                        <h6 style="display: flex; justify-content: space-between;">
+                            General Gmail Account Details
+                            <button 
+                                class="gmail_refresh_total" 
+                                hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"
+                                hx-target="#gmail-details-container" 
+                                hx-swap="innerHTML"
+                                onclick="rotateIcon(event)">
+                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
+                            </button>
+                        </h6>
+                        <div class="skdf" style="overflow: hidden;">
+                            <i class="tsdjhses" data-feather="mail"></i> 
+                            Email Address: 
+                            <span class="total_emails_counts">{{ account_details.primary_email|truncatechars:20 }}</span>
+                        </div>
+                        <div class="skdf">
+                            <i class="tsdjhses" data-feather="mail"></i> 
+                            Total Messages: 
+                            <span class="total_emails_counts">{{ account_details.total_messages }}</span>
+                        </div>
+                        <div class="skdf">
+                            <i class="tsdjhses" data-feather="mail"></i> 
+                            Total Threads: 
+                            <span class="total_emails_counts">{{ account_details.total_threads }}</span>
+                        </div>
+                    </span>
+                </div>                
+            </div>
+        </div>
+        <div class="row emails_general_informations mt-3">
+            <div class="col-md-3">
+                <div class="main_btn_desg col-md-12" id="gmail-labels-container">
+                    <span class="button_top"> 
+                        <h6 style="display: flex; justify-content: space-between;">
+                            Labels Email Count
+                            <button 
+                                class="gmail_refresh_total" 
+                                hx-get="{% url 'gmail_manage:refresh_gmail_labels' %}"
+                                hx-target="#gmail-labels-container" 
+                                hx-swap="innerHTML"
+                                onclick="rotateIcon(event)">
+                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
+                            </button>
+                        </h6>
+                        {% for key, value in account_labels_details.items %}
+                            <li>{{ key }}: {{ value }}</li>
+                        {% endfor %}
+                    </span>
+                </div>
             </div>
         </div>
 

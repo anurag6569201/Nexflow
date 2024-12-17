@@ -1,0 +1,19 @@
+<span class="button_top"> 
+    <h6 style="display: flex; justify-content: space-between;">
+        Labels Email Count
+        <button 
+            class="gmail_refresh_total" 
+            hx-get="{% url 'gmail_manage:refresh_gmail_labels' %}"
+            hx-target="#gmail-labels-container" 
+            hx-swap="innerHTML"
+            onclick="rotateIcon(event)">
+            <i class="icon_rotation" data-feather="refresh-ccw"></i>
+        </button>
+    </h6>
+    {% for key, value in account_labels_details.items %}
+        <li>{{ key }}: {{ value }}</li>
+    {% endfor %}
+</span>
+<script>
+    feather.replace()
+</script>   
