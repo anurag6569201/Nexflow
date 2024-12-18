@@ -17,93 +17,163 @@
     <div class="col-md-12">
         <div class="row emails_general_informations">
             <div class="col-md-3">
-                <div class="main_btn_desg col-md-12" id="gmail-details-container">
-                    <span class="button_top"> 
-                        <h6 style="display: flex; justify-content: space-between;">
-                            General Gmail Account Details
-                            <button 
-                                class="gmail_refresh_total" 
-                                hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"
-                                hx-target="#gmail-details-container" 
-                                hx-swap="innerHTML"
-                                onclick="rotateIcon(event)">
-                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
-                            </button>
-                        </h6>
-                        <div class="skdf" style="overflow: hidden;">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Email Address: 
-                            <span class="total_emails_counts">{{ account_details.primary_email|truncatechars:20 }}</span>
+                <div class="row" style="gap: 1vw;">
+                    <div class="col-md-12">
+                        <div class="main_btn_desg col-md-12" id="gmail-details-container">
+                            {% include 'apps/gmail/partials/gmail_details.html' %}
+                        </div>                
+                    </div>
+                    <div class="col-md-12">
+                        <div class="main_btn_desg col-md-12" id="gmail-labels-container">
+                            {% include 'apps/gmail/partials/gmail_labels.html' %}
                         </div>
-                        <div class="skdf">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Total Messages: 
-                            <span class="total_emails_counts">{{ account_details.total_messages }}</span>
-                        </div>
-                        <div class="skdf">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Total Threads: 
-                            <span class="total_emails_counts">{{ account_details.total_threads }}</span>
-                        </div>
-                    </span>
-                </div>                
-            </div>
-            <div class="col-md-9">
-                <div class="main_btn_desg col-md-12" id="gmail-details-container">
-                    <span class="button_top"> 
-                        <h6 style="display: flex; justify-content: space-between;">
-                            General Gmail Account Details
-                            <button 
-                                class="gmail_refresh_total" 
-                                hx-get="{% url 'gmail_manage:refresh_gmail_data' %}"
-                                hx-target="#gmail-details-container" 
-                                hx-swap="innerHTML"
-                                onclick="rotateIcon(event)">
-                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
-                            </button>
-                        </h6>
-                        <div class="skdf" style="overflow: hidden;">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Email Address: 
-                            <span class="total_emails_counts">{{ account_details.primary_email|truncatechars:20 }}</span>
-                        </div>
-                        <div class="skdf">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Total Messages: 
-                            <span class="total_emails_counts">{{ account_details.total_messages }}</span>
-                        </div>
-                        <div class="skdf">
-                            <i class="tsdjhses" data-feather="mail"></i> 
-                            Total Threads: 
-                            <span class="total_emails_counts">{{ account_details.total_threads }}</span>
-                        </div>
-                    </span>
-                </div>                
-            </div>
-        </div>
-        <div class="row emails_general_informations mt-3">
-            <div class="col-md-3">
-                <div class="main_btn_desg col-md-12" id="gmail-labels-container">
-                    <span class="button_top"> 
-                        <h6 style="display: flex; justify-content: space-between;">
-                            Labels Email Count
-                            <button 
-                                class="gmail_refresh_total" 
-                                hx-get="{% url 'gmail_manage:refresh_gmail_labels' %}"
-                                hx-target="#gmail-labels-container" 
-                                hx-swap="innerHTML"
-                                onclick="rotateIcon(event)">
-                                <i class="icon_rotation" data-feather="refresh-ccw"></i>
-                            </button>
-                        </h6>
-                        {% for key, value in account_labels_details.items %}
-                            <li>{{ key }}: {{ value }}</li>
-                        {% endfor %}
-                    </span>
+                    </div>
                 </div>
             </div>
-        </div>
+            <style>
+                .gmail_interval_times .g-4, .gx-4,
+                .gmail_interval_times .g-4, .gy-4{
+                    --bs-gutter-y:1rem !important
+                }
+                #loader {
+                    margin-top: 20px;
+                }
 
+                
+                .form-label{
+                    font-size: 12px;
+                    margin-bottom: .2rem !important;
+                }
+                .form-group button,
+                .form-group input{
+                    font-size: 12px;
+                }
+            </style>
+            <div class="col-md-9">
+                <div class="main_btn_desg">
+                <div class="card button_top p-3" style="color: white;margin-bottom: 1vw;">
+                    <h6 class="text-left">Fetch Emails</h6>
+                    <form id="email-form" method="post" class="needs-validation">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="start_time" class="form-label">Start Time:</label>
+                                    <input type="datetime-local" id="start_time" name="start_time" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="end_time" class="form-label">End Time:</label>
+                                    <input type="datetime-local" id="end_time" name="end_time" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="end_time" class="form-label">Submit:</label>
+                                    <button type="submit" class="btn w-100" style="background-color: transparent;border: 1px solid #0e7c66;">Fetch Emails</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+                <!-- Loader -->
+                <div id="loader" class="text-center my-2" style="display: none;">
+                    <div class="spinner-border" role="status" style="color: white;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p style="color: white;">Fetching emails, please wait...</p>
+                </div>
+            
+                <!-- Email Cards Container -->
+                <div id="gmail_interval_times" class="row row-cols-1 row-cols-md-3 g-4">
+                    <!-- Dynamic Email Cards will be inserted here -->
+                </div>
+            </div>
+            
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // Handle form submission via AJAX
+                    $("#email-form").submit(function (e) {
+                        e.preventDefault(); // Prevent the default form submission
+            
+                        // Show the loader
+                        $("#loader").show();
+            
+                        // Get the form data
+                        var start_time = $("#start_time").val();
+                        var end_time = $("#end_time").val();
+            
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'gmail_manage:email_interval_view' %}",
+                            data: {
+                                'start_time': start_time,
+                                'end_time': end_time,
+                                'csrfmiddlewaretoken': '{{ csrf_token }}'  // CSRF token for security
+                            },
+                            success: function (response) {
+                                // Hide the loader
+                                $("#loader").hide();
+            
+                                // Clear existing emails
+                                $("#gmail_interval_times").empty();
+            
+                                if (response.emails && response.emails.length > 0) {
+                                    // Add email cards dynamically
+                                    response.emails.forEach(function (email) {
+                                        var cardHtml = `
+                                            <div class="col">
+                                                <div class="main_btn_desg h-100">
+                                                <div class="card button_top h-100">
+                                                    <div class="gmail_basic_informations">
+                                                        <div class="label">Sender:</div>
+                                                        <div class="main_label">${email.sender}</div>
+                                                        
+                                                        <div class="label">Subject:</div>
+                                                        <div class="main_label">${email.subject}</div>
+                        
+                                                        <div class="label">Date:</div>
+                                                        <div class="main_label">${email.date}</div>
+                                                    </div>
+                                                    <div class="card-body p-0">
+                                                        <div class="card__content">
+                                                            <p class="card__title">Message</p>
+                                                            <p class="card__description">${email.snippet}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>`;
+                                        $("#gmail_interval_times").append(cardHtml);
+                                    });
+                                } else {
+                                    // No emails found message
+                                    var noEmailsHtml = `
+                                        <p style="color:white;text-align:center;width:100%;">No emails found for the selected interval.</p>`;
+                                    $("#gmail_interval_times").append(noEmailsHtml);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                // Hide the loader
+                                $("#loader").hide();
+            
+                                // Display errors from server-side validation
+                                var errors = xhr.responseJSON.errors;
+                                for (var field in errors) {
+                                    errors[field].forEach(function (errorMessage) {
+                                        alert(field + ': ' + errorMessage);
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+            
+        </div>
 
     </div>
 </div>

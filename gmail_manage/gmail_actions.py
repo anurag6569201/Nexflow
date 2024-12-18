@@ -37,3 +37,35 @@ def get_account_labels_gmail_api(request,service):
     except HttpError as error:
         print(f"An error occurred: {error}")
         return {}
+
+
+
+def get_gmail_data_at_intervals(service, start_time, end_time):
+    start_timestamp = int(start_time.timestamp())
+    end_timestamp = int(end_time.timestamp())
+
+    # Query to filter emails in the time interval
+    query = f"after:{start_timestamp} before:{end_timestamp}"
+    results = service.users().messages().list(userId='me', q=query).execute()
+    messages = results.get('messages', [])
+    email_data = []
+
+    if not messages:
+        return {"message": f"No emails received between {start_time} and {end_time}", "emails": []}
+
+    for message in messages:
+        msg = service.users().messages().get(userId='me', id=message['id']).execute()
+        headers = msg['payload']['headers']
+        subject = next((item['value'] for item in headers if item['name'] == 'Subject'), "No Subject")
+        sender = next((item['value'] for item in headers if item['name'] == 'From'), "Unknown Sender")
+        date = next((item['value'] for item in headers if item['name'] == 'Date'), "Unknown Date")
+        snippet = msg.get('snippet', "No snippet available")
+
+        email_data.append({
+            "sender": sender,
+            "subject": subject,
+            "date": date,
+            "snippet": snippet,
+        })
+
+    return {"message": "Emails fetched successfully.", "emails": email_data}
