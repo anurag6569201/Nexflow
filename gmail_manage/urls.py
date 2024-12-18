@@ -14,4 +14,5 @@ urlpatterns = [
     path('refresh-gmail-labels/', views.refresh_gmail_labels, name='refresh_gmail_labels'),
 
     path('fetch-emails/', views.refresh_gmail_at_intervals, name='email_interval_view'),
+    path('delete_gmail_by_labels/', views.delete_gmail_by_labels, name='delete_gmail_by_labels'),
 ]

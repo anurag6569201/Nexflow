@@ -1,3 +1,4 @@
 .env
 gmail_manage/gmail_auth/credentials/credentials.json
 gmail_manage/gmail_auth/tokens/token.json
+gmail_manage/gmail_auth/tokens/modify_token.json

@@ -69,3 +69,61 @@ def get_gmail_data_at_intervals(service, start_time, end_time):
         })
 
     return {"message": "Emails fetched successfully.", "emails": email_data}
+
+
+
+def delete_emails_efficiently_by_labels(service, label, max_emails, order_by, no_of_days):
+    """
+    Delete emails by moving them to Trash, efficiently handling batches.
+    :param service: Gmail API service instance.
+    :param label: Gmail label to filter emails (e.g., 'IMPORTANT').
+    :param max_emails: Maximum number of emails to delete. Use -1 for all.
+    :param order_by: Order of emails ('newest' or 'oldest').
+    """
+    try:
+        query = f"label:{label}"
+        if order_by == "oldest":
+            query += f" older_than:{no_of_days}d"  # Example for oldest 
+        elif order_by == "newest":
+            query += f" newer_than:{no_of_days}d"  # Example for newest
+
+        total_deleted = 0
+        next_page_token = None
+        messages_log = []
+
+        while True:
+            response = service.users().messages().list(
+                userId="me",
+                q=query,
+                maxResults=100,
+                pageToken=next_page_token
+            ).execute()
+
+            messages = response.get("messages", [])
+            if not messages:
+                break
+
+            for msg in messages:
+                if max_emails != -1 and total_deleted >= max_emails:
+                    messages_log.append(f"Reached the maximum limit of {max_emails} emails.")
+                    return messages_log
+
+                try:
+                    service.users().messages().modify(
+                        userId="me",
+                        id=msg["id"],
+                        body={"removeLabelIds": [], "addLabelIds": ["TRASH"]}
+                    ).execute()
+                    total_deleted += 1
+                    messages_log.append(f"Deleted email with ID {msg['id']}.")
+                except HttpError as error:
+                    messages_log.append(f"Error deleting email with ID {msg['id']}: {error}")
+
+            next_page_token = response.get("nextPageToken")
+            if not next_page_token:
+                break
+
+        messages_log.append(f"Successfully deleted {total_deleted} emails with label '{label}'.")
+        return messages_log
+    except HttpError as error:
+        return [f"An error occurred: {error}"]

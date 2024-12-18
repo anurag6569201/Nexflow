@@ -2,7 +2,8 @@ from django.shortcuts import render
 from .models import GmailAccountDetails,GmailAccountLabelsCounts
 
 from gmail_manage.gmail_auth.gmail_readonly_authentication import authenticate_gmail_for_readonly
-from gmail_manage.gmail_actions import get_account_details_gmail_api,get_account_labels_gmail_api,get_gmail_data_at_intervals
+from gmail_manage.gmail_auth.gmail_modify_authentication import authenticate_gmail_for_modify
+from gmail_manage.gmail_actions import get_account_details_gmail_api,get_account_labels_gmail_api,get_gmail_data_at_intervals,delete_emails_efficiently_by_labels
 
 
 from .forms import EmailIntervalForm
@@ -46,6 +47,28 @@ def refresh_gmail_at_intervals(request):
             return JsonResponse({"errors": {"form": ["Invalid date format."]}}, status=400)
     else:
         return render(request, 'email/email_interval_form.html')
+
+
+def delete_gmail_by_labels(request):
+    if request.method == "POST":
+        label = request.POST.get('label')
+        max_emails = int(request.POST.get('max_emails', 0))
+        order_by = request.POST.get('order_by', 'oldest')
+        no_of_days = int(request.POST.get('no_of_days', 30))
+
+        try:
+            gmail_delete_service = authenticate_gmail_for_modify()
+            response_logs = delete_emails_efficiently_by_labels(
+                gmail_delete_service, label, max_emails, order_by, no_of_days
+            )
+            return JsonResponse({"success": True, "logs": response_logs}, status=200)
+        except ValueError as e:
+            return JsonResponse({"success": False, "errors": [str(e)]}, status=400)
+        except Exception as e:
+            return JsonResponse({"success": False, "errors": ["An unexpected error occurred."]}, status=500)
+    else:
+        return render(request, 'email/email_interval_form.html')
+
 
 def gmail_manage(request):
     account_labels_details, created = GmailAccountLabelsCounts.objects.get_or_create(user=request.user)

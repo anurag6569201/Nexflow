@@ -32,43 +32,51 @@
     transform: translateY(0);
 }
 
-.emails_general_informations{
+.emails_general_informations {
     padding: none !important;
 }
-.emails_general_informations .col-md-3{
+
+.emails_general_informations .col-md-3 {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
-.gmail_refresh_total{
+
+.gmail_refresh_total {
     border-radius: 5px;
     background-color: #ffffff;
     border: none;
     color: #0e7c66;
     margin-left: 5px;
 }
-.gmail_refresh_total:hover{
+
+.gmail_refresh_total:hover {
     background-color: #0e7c66;
     color: #ffffff;
     transition: .4s;
 }
-.gmail_refresh_total svg{
+
+.gmail_refresh_total svg {
     width: 16px !important;
     height: 16px !important;
 }
-.main_btn_desg .skdf{
+
+.main_btn_desg .skdf {
     display: flex;
     justify-content: left;
     align-items: center;
     gap: 5px;
 }
-.main_btn_desg .tsdjhses{
+
+.main_btn_desg .tsdjhses {
     width: 14px !important;
     height: 14px !important;
 }
+
 @keyframes rotate {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -78,11 +86,14 @@
     animation: rotate 1s linear infinite;
 }
 
-.g-4, .gx-4{
-    --bs-gutter-x:1rem !important;
+.g-4,
+.gx-4 {
+    --bs-gutter-x: 1rem !important;
 }
-.g-4, .gy-4{
-    --bs-gutter-y:1rem !important;
+
+.g-4,
+.gy-4 {
+    --bs-gutter-y: 1rem !important;
 }
 
 
@@ -96,16 +107,16 @@
     overflow: hidden;
     perspective: 1000px;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .card svg {
+}
+
+.card svg {
     width: 48px;
     fill: #333;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  
-  .card__content {
+}
+
+
+.card__content {
     position: absolute;
     top: 0;
     left: 0;
@@ -118,45 +129,75 @@
     transform: rotateX(-90deg);
     transform-origin: bottom;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  .card__content::-webkit-scrollbar{
+}
+
+.card__content::-webkit-scrollbar {
     width: 5px !important;
-  }
-  .card:hover .card__content {
+}
+
+.card:hover .card__content {
     transform: rotateX(0deg);
-  }
-  
-  .card__title {
+}
+
+.card__title {
     margin: 0;
     font-size: 12px;
     color: #333;
     font-weight: 700;
-  }
-  
-  .card:hover svg {
+}
+
+.card:hover svg {
     scale: 0;
-  }
-  
-  .card__description {
+}
+
+.card__description {
     margin: 10px 0 0;
     font-size: 10px;
     color: #777;
     line-height: 1.4;
-  }
-  
-  .gmail_basic_informations{
+}
+
+.gmail_basic_informations {
     padding: 10px;
     color: white;
     font-size: 14px;
     line-height: 14px;
-  }
-  .gmail_basic_informations .label{
+}
+
+.gmail_basic_informations .label {
     font-weight: 600;
     display: block;
     font-size: 10px;
-  }
-  .gmail_basic_informations .main_label{
+}
+
+.gmail_basic_informations .main_label {
     margin-bottom: 10px;
     font-size: 10px;
-  }
+}
 
+.gmail_interval_times .g-4,
+.gx-4,
+.gmail_interval_times .g-4,
+.gy-4 {
+    --bs-gutter-y: 1rem !important
+}
+
+#loader {
+    margin-top: 20px;
+}
+
+
+.form-label {
+    font-size: 12px;
+    margin-bottom: .2rem !important;
+}
+
+.form-group button,
+.form-group input {
+    font-size: 12px;
+}
+
+.form-group button:hover {
+    background: white !important;
+    color: #0e7c66;
+}
