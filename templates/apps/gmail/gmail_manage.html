@@ -54,7 +54,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="end_time" class="form-label">Submit:</label>
-                                                <button type="submit" class="btn w-100" style="background-color: transparent;border: 1px solid #0e7c66;">Fetch Emails</button>
+                                                <button type="submit" class="btn w-100 form_submit_btns">Fetch Emails</button>
                                             </div>
                                         </div>
                                     </div>
@@ -71,27 +71,50 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
-                        <form id="delete-email-form">
-                            <label for="label">Label:</label>
-                            <input type="text" id="label" name="label" required placeholder="CHAT">
+                    <div class="col-md-12" style="margin-top: 1vw;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="main_btn_desg">
+                                    <div class="card button_top p-3" style="color: white;">
+                                        <h6 class="text-left">Delete Emails by Labels</h6>
+                                        <form id="delete-email-form">
+                                            <input class="mb-1" type="text" id="label" name="label" required placeholder="Enter label name i.e:UNREAD">
+                                            <input class="mb-1" type="number" id="max_emails" name="max_emails" value="" required placeholder="Max Emails Wanted to trash (-1 for all)">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <select id="order_by" name="order_by">
+                                                        <option value="oldest">Oldest</option>
+                                                        <option value="newest">Newest</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="number" id="no_of_days" name="no_of_days" value="" required placeholder="No of days old or new">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn form_submit_btns mt-2">Delete Emails</button>
+                                        </form>
+                                        <div id="result"></div>                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ps-0">
+                                <div class="main_btn_desg">
+                                    <div class="card button_top p-3" style="color: white;">
+                                        <h6 class="text-left">Delete All Emails by Id</h6>
+                                        <form method="POST" id="delete-email-form-by-id">
+                                            <p>Deleting all emails from the specified sender's email address. This action will remove all emails you have received from this sender.</p>
+                                            <label for="email">Sender Email:</label>
+                                            <input type="text" id="email" name="email" required placeholder="example@example.com">
+                                            <button type="submit" class="btn form_submit_btns mt-1">Delete Emails</button>
+                                        </form>
+                                        <div id="result_email"></div>                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         
-                            <label for="max_emails">Max Emails (-1 for all):</label>
-                            <input type="number" id="max_emails" name="max_emails" value="0" required>
                         
-                            <label for="order_by">Order By:</label>
-                            <select id="order_by" name="order_by">
-                                <option value="oldest">Oldest</option>
-                                <option value="newest">Newest</option>
-                            </select>
-                        
-                            <label for="no_of_days">No of Days:</label>
-                            <input type="number" id="no_of_days" name="no_of_days" value="30" required>
-                        
-                            <button type="submit">Delete Emails</button>
-                        </form>
-                        
-                        <div id="result"></div>                    
                     </div>
                 </div>
 
@@ -193,13 +216,17 @@
             const result = await response.json();
 
             if (response.ok) {
+                resultDiv.style.color = 'green'; 
                 resultDiv.innerHTML = result.logs.map(log => `<p>${log}</p>`).join("");
             } else {
+                resultDiv.style.color = 'red';
                 resultDiv.innerHTML = `<p>Error: ${JSON.stringify(result.errors)}</p>`;
             }
         } catch (error) {
+            resultDiv.style.color = 'red';
             resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
         }
+
     });
 
     function getCookie(name) {
@@ -217,7 +244,32 @@
         return cookieValue;
     }
 
-
+    $(document).ready(function() {
+        $('#delete-email-form-by-id').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            const email = $('#email').val();
+            const resultDiv = document.getElementById("result_email");
+            resultDiv.innerHTML = "Processing...";
+            $.ajax({
+                url: "{% url 'gmail_manage:delete_gmail_by_id' %}",
+                type: "POST",
+                data: {
+                    email: email,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        $('#result_email').text(response.message).css('color', 'green');
+                    } else {
+                        $('#result_email').text(response.message).css('color', 'red');
+                    }
+                },
+                error: function() {
+                    $('#result_email').text("An error occurred while processing your request.").css('color', 'red');
+                }
+            });
+        });
+    });
 </script>
 
 {% endblock pages %}

@@ -3,11 +3,9 @@ from .models import GmailAccountDetails,GmailAccountLabelsCounts
 
 from gmail_manage.gmail_auth.gmail_readonly_authentication import authenticate_gmail_for_readonly
 from gmail_manage.gmail_auth.gmail_modify_authentication import authenticate_gmail_for_modify
-from gmail_manage.gmail_actions import get_account_details_gmail_api,get_account_labels_gmail_api,get_gmail_data_at_intervals,delete_emails_efficiently_by_labels
+from gmail_manage.gmail_actions import get_account_details_gmail_api,get_account_labels_gmail_api,get_gmail_data_at_intervals,delete_emails_efficiently_by_labels,fetch_emails_from_sender,move_emails_to_trash
 
 
-from .forms import EmailIntervalForm
-from django.utils.timezone import make_aware
 from datetime import datetime
 from django.http import JsonResponse
 
@@ -68,6 +66,21 @@ def delete_gmail_by_labels(request):
             return JsonResponse({"success": False, "errors": ["An unexpected error occurred."]}, status=500)
     else:
         return render(request, 'email/email_interval_form.html')
+
+
+def delete_gmail_by_id(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            gmail_delete_service_by_id = authenticate_gmail_for_modify()
+            
+            email_ids = fetch_emails_from_sender(gmail_delete_service_by_id, email)
+            move_emails_to_trash(gmail_delete_service_by_id, email_ids)
+            
+            return JsonResponse({"status": "success", "message": f"{len(email_ids)} emails deleted successfully."})
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)})
+    return render(request, "delete_emails.html")
 
 
 def gmail_manage(request):

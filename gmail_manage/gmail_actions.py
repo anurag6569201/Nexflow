@@ -127,3 +127,20 @@ def delete_emails_efficiently_by_labels(service, label, max_emails, order_by, no
         return messages_log
     except HttpError as error:
         return [f"An error occurred: {error}"]
+
+
+
+def fetch_emails_from_sender(service, sender_email):
+    query = f"from:{sender_email}"
+    results = service.users().messages().list(userId='me', q=query).execute()
+    messages = results.get('messages', [])
+    email_ids = [msg['id'] for msg in messages]
+    return email_ids
+
+def move_emails_to_trash(service, email_ids):
+    for email_id in email_ids:
+        try:
+            service.users().messages().trash(userId='me', id=email_id).execute()
+            print(f"Moved email with ID: {email_id} to Trash")
+        except Exception as e:
+            print(f"Failed to move email with ID: {email_id} to Trash. Error: {str(e)}")

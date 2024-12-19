@@ -197,7 +197,49 @@
     font-size: 12px;
 }
 
-.form-group button:hover {
+.form_submit_btns{
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+.form_submit_btns:hover {
     background: white !important;
     color: #0e7c66;
+}
+#delete-email-form-by-id input,
+#delete-email-form select,
+#delete-email-form input{
+    background-color: #ffffff61 !important;
+    border: 1px solid #0e7c66;
+    border-radius: 6px;
+    width: 100%;
+    padding: 5px;
+    color: white;
+}
+#delete-email-form-by-id input::placeholder,
+#delete-email-form input::placeholder{
+    color: #c6ecde;
+}
+#delete-email-form-by-id button,
+#delete-email-form button{
+    font-size: 12px;
+}
+#result_email,
+#result{
+    max-height: 130px;
+    background:#2a958499;
+    padding: 0 5px;
+    border-radius: 5px;
+    margin-top: 8px;
+    overflow: auto;
+    border: 1px solid #0e7c66;
+}
+#result_email::-webkit-scrollbar,
+#result::-webkit-scrollbar{
+    width: 6px !important;
+}
+#result_email p,
+#result p{
+    margin: 0;
+    list-style: disc;
 }

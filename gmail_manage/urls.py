@@ -15,4 +15,5 @@ urlpatterns = [
 
     path('fetch-emails/', views.refresh_gmail_at_intervals, name='email_interval_view'),
     path('delete_gmail_by_labels/', views.delete_gmail_by_labels, name='delete_gmail_by_labels'),
+    path('delete_gmail_by_id/', views.delete_gmail_by_id, name='delete_gmail_by_id'),
 ]
