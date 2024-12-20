@@ -9,6 +9,10 @@ from gmail_manage.gmail_actions import get_account_details_gmail_api,get_account
 from datetime import datetime
 from django.http import JsonResponse
 
+import schedule
+import time
+from gmail_manage.worker import fetch_emails
+
 def refresh_gmail_data(request):
     gmail_detials_service=authenticate_gmail_for_readonly()
     get_account_details_gmail_api(request,gmail_detials_service)
@@ -83,6 +87,8 @@ def delete_gmail_by_id(request):
     return render(request, "delete_emails.html")
 
 
+
+
 def gmail_manage(request):
     account_labels_details, created = GmailAccountLabelsCounts.objects.get_or_create(user=request.user)
     label_info = account_labels_details.label_info or {} 
@@ -95,3 +101,13 @@ def gmail_manage(request):
     }
     
     return render(request, 'apps/gmail/gmail_manage.html', context)
+
+
+
+def testing(request):
+    schedule.every(1).minutes.do(fetch_emails)
+
+    print("Scheduler started. Fetching emails every 10 minutes...")
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

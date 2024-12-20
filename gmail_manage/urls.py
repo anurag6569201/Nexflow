@@ -5,6 +5,7 @@ app_name = 'gmail_manage'
 
 urlpatterns = [
     path('', views.gmail_manage, name='gmail_manage'),
+    path('testing/', views.testing, name='testing'),
 
 
 

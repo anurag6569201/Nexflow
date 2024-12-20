@@ -1,5 +1,7 @@
 from googleapiclient.errors import HttpError
 from gmail_manage.models import GmailAccountDetails,GmailAccountLabelsCounts
+import base64
+from email import message_from_bytes
 
 def get_account_details_gmail_api(request,service):
     """Fetch general details about the Gmail account."""
@@ -144,3 +146,57 @@ def move_emails_to_trash(service, email_ids):
             print(f"Moved email with ID: {email_id} to Trash")
         except Exception as e:
             print(f"Failed to move email with ID: {email_id} to Trash. Error: {str(e)}")
+
+
+
+
+
+
+# auto retrieval ----------------------------------------------------
+# auto retrieval ----------------------------------------------------
+def decode_email_content(raw_message):
+    message_bytes = base64.urlsafe_b64decode(raw_message)
+    message = message_from_bytes(message_bytes)
+    return message
+
+# Step 3: Get emails in a time interval with specific label
+def fetch_emails_in_interval_automatic(service, start_time, end_time, label):
+    # Convert datetime to UNIX timestamps
+    start_timestamp = int(start_time.timestamp())
+    end_timestamp = int(end_time.timestamp())
+    
+    # Query to filter emails in the time interval
+    query = f"after:{start_timestamp} before:{end_timestamp}"
+    results = service.users().messages().list(userId='me', q=query, labelIds=label).execute()
+    messages = results.get('messages', [])
+
+    if not messages:
+        print(f"No emails received between {start_time} and {end_time} under label '{label}'")
+        return
+    
+    print(f"Emails received between {start_time} and {end_time} under label '{label}':")
+    for message in messages:
+        msg = service.users().messages().get(userId='me', id=message['id'], format='raw').execute()
+        raw_message = msg['raw']
+        decoded_message = decode_email_content(raw_message)
+
+        # Extract headers
+        headers = decoded_message.items()
+        subject = decoded_message.get('Subject', "No Subject")
+        sender = decoded_message.get('From', "Unknown Sender")
+        date = decoded_message.get('Date', "Unknown Date")
+        
+        # Extract email body
+        body = ""
+        if decoded_message.is_multipart():
+            for part in decoded_message.walk():
+                if part.get_content_type() == "text/plain":
+                    body = part.get_payload(decode=True).decode()
+                    break
+        else:
+            body = decoded_message.get_payload(decode=True).decode()
+        
+        print(f"Sender: {sender}")
+        print(f"Subject: {subject}")
+        print(f"Date: {date}")
+        print(f"Body:\n{body}")
