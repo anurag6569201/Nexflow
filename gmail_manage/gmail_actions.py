@@ -175,6 +175,7 @@ def fetch_emails_in_interval_automatic(request,service, start_time, end_time, la
         return
     
     print(f"Emails received between {start_time} and {end_time} under label '{label}':")
+    emails_data=[]
     for message in messages:
         msg = service.users().messages().get(userId='me', id=message['id'], format='raw').execute()
         raw_message = msg['raw']
@@ -206,3 +207,8 @@ def fetch_emails_in_interval_automatic(request,service, start_time, end_time, la
             date=date,
             body=body
         )
+
+        combined_data = f"Subject: {subject}\nSender: {sender}\nReceiver: {receiver}\nDate: {date}\nBody:\n{body}\n"
+        emails_data.append(combined_data)
+
+    return emails_data

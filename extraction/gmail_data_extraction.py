@@ -1,13 +1,22 @@
 import requests
+import os
 import json
 import logging
+from django.shortcuts import get_object_or_404, render
+from extraction.models import EmailDetailing
+import os
+import requests
+import logging
+from dotenv import load_dotenv
+from django.shortcuts import get_object_or_404, render
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
-# API Configuration
-API_KEY = "your_api_key_here"
-ENDPOINT = "https://your-llm-endpoint.com/api"
+# Load environment variables
+load_dotenv()
+API_KEY = os.getenv('SPEECH_KEY')
+ENDPOINT = "https://ai-anuragsingh65692019195ai682501652060.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview"
 
 def call_gmail_analysis_api(email_data):
     """
@@ -46,7 +55,7 @@ def call_gmail_analysis_api(email_data):
                 },
                 {
                     "role": "user",
-                    "content": email_data,
+                    "content": f'''{email_data}''',
                 },
             ],
             "temperature": 0.6,
@@ -54,18 +63,34 @@ def call_gmail_analysis_api(email_data):
             "max_tokens": 1200,
         }
 
-        # API call
-        logging.info("Sending request to LLM API...")
         response = requests.post(ENDPOINT, headers=headers, json=payload)
-        response.raise_for_status()  # Raise HTTP errors for debugging
-        logging.info("Received response from LLM API.")
-
-        # Parse JSON response
+        response.raise_for_status()
         return response.json()
 
-    except requests.exceptions.RequestException as e:
-        logging.error(f"API request failed: {e}")
-        return {"error": "API request failed", "details": str(e)}
-    except json.JSONDecodeError as e:
-        logging.error(f"Failed to parse API response: {e}")
-        return {"error": "Failed to parse API response", "details": str(e)}
+    except requests.RequestException as e:
+        logger.error(f"Failed to make the request. Error: {e}")
+        return None
+
+
+def process_and_save_gmail_detailing(request, gmails_data):
+    analysis_result = call_gmail_analysis_api(gmails_data)
+    analysis_result = analysis_result['choices'][0]['message']['content']
+
+    if analysis_result:
+        # Save the result to the TextDetailing model
+        emails_detailing = EmailDetailing.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            output_text=analysis_result
+        )
+        logger.info(f"Email detailing saved successfully: {emails_detailing.id}")
+
+        return {
+            "success": True,
+            "message": "Email detailing processed and saved successfully.",
+            "emails_detailing_id": emails_detailing.id
+        }
+    else:
+        return {
+            "success": False,
+            "message": "Failed to process Email detailing."
+        }

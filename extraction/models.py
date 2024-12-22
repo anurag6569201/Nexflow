@@ -10,3 +10,13 @@ class TextDetailing(models.Model):
 
     def __str__(self):
         return f"{self.user.username if self.user else 'API User'}'s Text Detailing"
+    
+
+
+class EmailDetailing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    output_text = models.TextField()
+    date_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username if self.user else 'API User'}'s Email Detailing"
