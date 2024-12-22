@@ -17,5 +17,4 @@ urlpatterns = [
     # Admin views
     path('api/', include(router.urls)),
     path('save/audio/', SaveAudioView.as_view(), name='save_audio'),
-
 ]

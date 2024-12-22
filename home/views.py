@@ -11,7 +11,7 @@ from django.views import View
 from .live_stt import transcribe
 from .models import AudioSaving
 from .serializers import AudioSavingSerializer
-from home.Extraction.audio_data_extraction import process_and_save_text_detailing
+from extraction.audio_data_extraction import process_and_save_text_detailing
 from gmail_manage.worker import fetch_emails
 
 class AdminAudioViewSet(viewsets.ViewSet):

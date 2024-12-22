@@ -206,8 +206,3 @@ def fetch_emails_in_interval_automatic(request,service, start_time, end_time, la
             date=date,
             body=body
         )
-        print(f"Sender: {sender}")
-        print(f"Receiver: {receiver}")
-        print(f"Subject: {subject}")
-        print(f"Date: {date}")
-        print(f"Body:\n{body}")

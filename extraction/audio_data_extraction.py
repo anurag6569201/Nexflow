@@ -3,7 +3,8 @@ import requests
 import logging
 from dotenv import load_dotenv
 from django.shortcuts import get_object_or_404, render
-from home.models import TextDetailing, AudioSaving
+from home.models import AudioSaving
+from extraction.models import TextDetailing
 from datetime import timedelta
 
 # Configure logging

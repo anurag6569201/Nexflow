@@ -10,14 +10,14 @@ def fetch_emails(request):
     print("Current time:", formatted_datetime)
 
     # Calculate start and end times using datetime objects
-    start_time = now - timedelta(minutes=10)  # 10 minute ago
+    start_time = now - timedelta(minutes=35)  # 10 minute ago
     end_time = now  # Current time
 
     # Format start and end times as strings
     formatted_start_time = start_time.strftime("%Y-%m-%d %H:%M:%S")
     formatted_end_time = end_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    label = 'SENT'  # Change this to the desired label
+    label = 'INBOX'  # Change this to the desired label
     print("Start time:", formatted_start_time)
     print("End time:", formatted_end_time)
     print("Label:", label)

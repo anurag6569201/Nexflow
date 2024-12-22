@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'landing_page',
     'home',
     'gmail_manage',
+    'extraction',
     'rest_framework',
     'corsheaders',
 ]
