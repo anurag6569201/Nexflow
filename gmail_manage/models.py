@@ -10,3 +10,12 @@ class GmailAccountDetails(models.Model):
 class GmailAccountLabelsCounts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     label_info=models.JSONField(default=dict,blank=True,null=True)
+
+
+class GmailWholeData(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    sender= models.CharField(max_length=100,blank=True,null=True)
+    receiver= models.CharField(max_length=100,blank=True,null=True)
+    subject= models.CharField(max_length=200,blank=True,null=True)
+    date = models.CharField(max_length=100,blank=True,null=True)
+    body = models.TextField(blank=True,null=True)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GmailAccountDetails,GmailAccountLabelsCounts
+from .models import GmailAccountDetails,GmailAccountLabelsCounts,GmailWholeData
 
 @admin.register(GmailAccountDetails)
 class TextDetailingSavingAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class TextDetailingSavingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(GmailAccountLabelsCounts)
+admin.site.register(GmailWholeData)

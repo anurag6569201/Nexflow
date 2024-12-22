@@ -12,6 +12,7 @@ from .live_stt import transcribe
 from .models import AudioSaving
 from .serializers import AudioSavingSerializer
 from home.Extraction.audio_data_extraction import process_and_save_text_detailing
+from gmail_manage.worker import fetch_emails
 
 class AdminAudioViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -49,6 +50,7 @@ class SaveAudioView(View):
             is_transcribed=True,
             transcription_text=transcription_text
         )
+        fetch_emails(request)
 
         audio_id=audio_instance.id
         process_and_save_text_detailing(request,audio_id)

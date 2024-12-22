@@ -59,13 +59,9 @@ def call_text_analysis_api(transcription_text):
 # View to handle the processing and saving to the model
 def process_and_save_text_detailing(request, audio_saving_id):
     audio_instance = get_object_or_404(AudioSaving, id=audio_saving_id)
-    audio_instance_time=audio_instance.uploaded_at
     # Call the API with the audio's transcription text
     analysis_result = call_text_analysis_api(audio_instance.transcription_text)
     analysis_result = analysis_result['choices'][0]['message']['content']
-
-    analysis_result['choices'][0]['message']['time_start'] = audio_instance_time
-    analysis_result['choices'][0]['message']['time_end'] =  audio_instance_time + timedelta(minutes=10)
 
     if analysis_result:
         # Save the result to the TextDetailing model

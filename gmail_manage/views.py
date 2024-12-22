@@ -105,7 +105,7 @@ def gmail_manage(request):
 
 
 def testing(request):
-    schedule.every(1).minutes.do(fetch_emails)
+    schedule.every(1).minutes.do(fetch_emails(request))
 
     print("Scheduler started. Fetching emails every 10 minutes...")
     while True:

@@ -1,5 +1,5 @@
 from googleapiclient.errors import HttpError
-from gmail_manage.models import GmailAccountDetails,GmailAccountLabelsCounts
+from gmail_manage.models import GmailAccountDetails,GmailAccountLabelsCounts,GmailWholeData
 import base64
 from email import message_from_bytes
 
@@ -159,8 +159,8 @@ def decode_email_content(raw_message):
     message = message_from_bytes(message_bytes)
     return message
 
-# Step 3: Get emails in a time interval with specific label
-def fetch_emails_in_interval_automatic(service, start_time, end_time, label):
+# : Get emails in a time interval with specific label
+def fetch_emails_in_interval_automatic(request,service, start_time, end_time, label):
     # Convert datetime to UNIX timestamps
     start_timestamp = int(start_time.timestamp())
     end_timestamp = int(end_time.timestamp())
@@ -184,6 +184,7 @@ def fetch_emails_in_interval_automatic(service, start_time, end_time, label):
         headers = decoded_message.items()
         subject = decoded_message.get('Subject', "No Subject")
         sender = decoded_message.get('From', "Unknown Sender")
+        receiver = decoded_message.get('To', "Unknown receiver")
         date = decoded_message.get('Date', "Unknown Date")
         
         # Extract email body
@@ -196,7 +197,17 @@ def fetch_emails_in_interval_automatic(service, start_time, end_time, label):
         else:
             body = decoded_message.get_payload(decode=True).decode()
         
+
+        GmailWholeData.objects.get_or_create(
+            user=request.user,
+            sender=sender,
+            receiver=receiver,
+            subject=subject,
+            date=date,
+            body=body
+        )
         print(f"Sender: {sender}")
+        print(f"Receiver: {receiver}")
         print(f"Subject: {subject}")
         print(f"Date: {date}")
         print(f"Body:\n{body}")
