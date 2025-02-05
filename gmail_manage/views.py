@@ -105,9 +105,60 @@ def gmail_manage(request):
 
 
 def testing(request):
-    schedule.every(1).minutes.do(fetch_emails(request))
+    schedule.every(10).minutes.do(fetch_emails(request))
 
     print("Scheduler started. Fetching emails every 10 minutes...")
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+
+
+# django webhook for notification of gmail
+import json
+from django.http import JsonResponse
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+
+from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
+
+def subscribe_to_gmail_push_notifications():
+    creds = Credentials.from_authorized_user_file("token.json", scopes=["https://www.googleapis.com/auth/gmail.readonly"])
+    service = build("gmail", "v1", credentials=creds)
+
+    request_body = {
+        "labelIds": ["INBOX"],  # Watch only the inbox
+        "topicName": "projects/gmail-trackit/topics/gmail-notifications"
+    }
+
+    response = service.users().watch(userId="me", body=request_body).execute()
+    print("Watch response:", response)
+
+
+def gmail_webhook(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        print("Received Gmail notification:", data)
+
+        # Fetch new emails since the last historyId
+        history_id = data["message"]["data"]
+        fetch_new_emails(history_id)
+
+        return JsonResponse({"status": "success"}, status=200)
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+def fetch_new_emails(history_id):
+    creds = Credentials.from_authorized_user_file("token.json", scopes=["https://www.googleapis.com/auth/gmail.readonly"])
+    service = build("gmail", "v1", credentials=creds)
+
+    response = service.users().history().list(userId="me", startHistoryId=history_id).execute()
+
+    if "history" in response:
+        for history in response["history"]:
+            if "messagesAdded" in history:
+                for msg in history["messagesAdded"]:
+                    msg_id = msg["message"]["id"]
+                    email_data = service.users().messages().get(userId="me", id=msg_id).execute()
+                    print("New Email:", email_data)
+

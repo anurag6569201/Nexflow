@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'extraction',
     'rest_framework',
     'corsheaders',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
