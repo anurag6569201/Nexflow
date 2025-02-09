@@ -11,7 +11,7 @@ def fetch_emails(request):
     print("Current time:", formatted_datetime)
 
     # Calculate start and end times using datetime objects
-    start_time = now - timedelta(minutes=140)  # 10 minute ago
+    start_time = now - timedelta(minutes=10)  # 10 minute ago
     end_time = now  # Current time
 
     # Format start and end times as strings
