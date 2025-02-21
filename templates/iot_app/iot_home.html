@@ -1,0 +1,16 @@
+{% extends "allauth/layouts/main_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth account %}
+{% block head_title %}
+{% trans "Profile" %}
+{% endblock head_title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'assets/css/gmail/gmail_manage.css' %}">
+<script src="https://unpkg.com/htmx.org@1.9.5"></script>
+<script src="{% static 'assets/js/gmail_scripts.js' %}"></script>
+
+{% endblock stylesheet %}
+{% block pages %}
+
+{% endblock pages %}

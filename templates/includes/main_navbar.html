@@ -11,8 +11,8 @@
       <li class="navbar__item {% if 'gmail' in request.path  %} navbar__item__new__background {% endif %}">
         <a href="{% url 'gmail_manage:gmail_manage' %}" class="navbar__link"><i data-feather="mail"></i><span>Gmail</span></a>        
       </li>
-      <li class="navbar__item">
-        <a href="#" class="navbar__link"><i data-feather="folder"></i><span>Projects</span></a>        
+      <li class="navbar__item {% if 'iot' in request.path  %} navbar__item__new__background {% endif %}">
+        <a href="{% url 'iot_app:iot_home' %}" class="navbar__link"><i data-feather="folder"></i><span>Projects</span></a>        
       </li>
       <li class="navbar__item">
         <a href="#" class="navbar__link"><i data-feather="archive"></i><span>Resources</span></a>        
